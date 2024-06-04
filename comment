@@ -38,5 +38,16 @@ babel.js 를 사용하려면 babel.config.json 파일 생성 +
 추가
 npm install @babel/preset-env --save-dev
 설치
+npm install --save-dev @babel/node
 
 ---
+
+nodemon
+npm i nodemon --save-dev
+파일이 수정되면 nodemon이 알아서 서버 재시작해줌
+
+scripts에
+nodemon --exec을 추가
+"dev": "nodemon --exec babel-node index.js",
+--> npm run~ 을 재시작 할 필요 없음
+--
