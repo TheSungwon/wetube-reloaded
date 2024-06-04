@@ -1,0 +1,42 @@
+git init
+
+git 생성
+git url 복사
+https://github.com/TheSungwon/wetube-reloaded
+
+git remote add origin 'url'
+
+---------command
+npm init
+
+node index.js
+
+npm run win
+
+--
+npm i express
+
+--
+scripts --> win --> console에 npm run win
+
+## package.json에 dependencies만 있으면 node_modules나 package-lock.json 지워도 npm install으로 재생성
+
+npm install --save-dev @babel/core
+--save-dev는 단순히 개발자에게 필요한..
+package.json에는
+"devDependencies": {
+"@babel/core": "^7.24.6"
+}
+으로 나타냄
+
+--
+babel.js 를 사용하려면 babel.config.json 파일 생성 +
+{
+"presets": ["@babel/preset-env"]
+}
+
+추가
+npm install @babel/preset-env --save-dev
+설치
+
+---

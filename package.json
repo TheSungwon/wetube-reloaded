@@ -2,8 +2,8 @@
   "name": "wetube",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
+    "win": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/TheSungwon/wetube-reloaded/issues"
   },
-  "homepage": "https://github.com/TheSungwon/wetube-reloaded#readme"
+  "homepage": "https://github.com/TheSungwon/wetube-reloaded#readme",
+  "주석": "scripts --> win --> console에 npm run win",
+  "주석2": "dependencies만 있으면 node_modules나 package-lock.json 지워도 npm install으로 재생성",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6"
+  }
 }
