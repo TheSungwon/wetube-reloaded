@@ -4,6 +4,11 @@ import express from "express";
 const PORT = 4000;
 const app = express();
 
+const middleware = (req, res, next) => {
+  console.log(`someone is going to : ${req.url}`);
+  next();
+};
+
 const handleHome = (req, res) => {
   return res.send("home send");
 };
@@ -14,6 +19,6 @@ const handleLogin = (req, res) => {
 const handleListening = () =>
   console.log(`server listening on port http://localhost:${PORT}`);
 
-app.get("/", handleHome);
+app.get("/", middleware, handleHome);
 app.get("/login", handleLogin);
 app.listen(4000, handleListening);
