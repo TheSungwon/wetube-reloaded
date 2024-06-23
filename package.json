@@ -19,7 +19,8 @@
   "주석": "scripts --> win --> console에 npm run win",
   "주석2": "dependencies만 있으면 node_modules나 package-lock.json 지워도 npm install으로 재생성",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",

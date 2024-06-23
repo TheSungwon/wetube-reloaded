@@ -1,13 +1,15 @@
 import express from "express";
 // const express = require("express"); import와 같은 표현
+import morgan from "morgan";
 
 const PORT = 4000;
 const app = express();
+const logger = morgan("dev");
 
-const logger = (req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-};
+// const logger = (req, res, next) => {
+//   console.log(`${req.method} ${req.url}`);
+//   next();
+// };
 
 const privateMiddleware = (req, res, next) => {
   const url = req.url;

@@ -51,3 +51,8 @@ nodemon --exec을 추가
 "dev": "nodemon --exec babel-node index.js",
 --> npm run~ 을 재시작 할 필요 없음
 --
+
+-----------
+npm i morgan
+-> HTTP request logger middleware for node.js
+
