@@ -11,14 +11,20 @@
 ---
 
 \*User Routers
-/users/edit
-/users/delete
+/users/:id -> see user
+/users/logout -> log out
+/users/edit -> edit my profile
+/users/delete -> delete my profile
 
 ---
 
 \*Video Routers
-/videos/watch
-/videos/edit
-/videos/delete
+/videos/:id -> see video
+/videos/:id/edit -> edit video
+/videos/:id/delete
+/videos/upload -> upload video
+
+---
+
 /videos/comment
 /videos/comments/delete
