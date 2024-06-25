@@ -69,3 +69,6 @@ cwd는 node.js 서버가 실행되는 위치 (package.json이 있는 위치)
 express는 '/views'를 찾기때문에  'views폴더 생성 -> ~.pug'
 사용하려면 res.render("~")
 app.set("view engine", "pug");으로 views폴더의 pug 파일을 찾도록 설정, import 안 함
+
+default 경로를 변경하려면
+app.set("views", proess.cwd() + "/src/views")
