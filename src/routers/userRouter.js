@@ -6,6 +6,6 @@ userRouter.get("/", (req, res) => res.send("users"));
 userRouter.get("/edit", edit);
 userRouter.get("/remove", remove);
 userRouter.get("/logout", logout);
-userRouter.get("/:id", see);
+userRouter.get("/:id(\\d+)", see);
 
 export default userRouter;
