@@ -72,3 +72,7 @@ app.set("view engine", "pug");으로 views폴더의 pug 파일을 찾도록 설�
 
 default 경로를 변경하려면
 app.set("views", proess.cwd() + "/src/views")
+
+----------
+MVP style
+<link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
