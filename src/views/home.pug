@@ -1,5 +1,10 @@
 extends base.pug
 
 block content
-    h1 Welcome here Your Will See the Trending Videos
+    h2 Welcome here Your Will See the Trending Videos
+    ul 
+        each video in videos 
+            li=video
+        else
+            li Sorry Nothing Found.
     
