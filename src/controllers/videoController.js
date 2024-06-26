@@ -3,7 +3,32 @@ const fakeUser = {
   loggedIn: false,
 };
 
-const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const videos = [
+  {
+    title: "first Video",
+    rating: 5,
+    comments: 2,
+    createAt: "2 minutes ago",
+    views: 345,
+    id: 1,
+  },
+  {
+    title: "second Video",
+    rating: 5,
+    comments: 2,
+    createAt: "2 minutes ago",
+    views: 345,
+    id: 2,
+  },
+  {
+    title: "third Video",
+    rating: 5,
+    comments: 2,
+    createAt: "2 minutes ago",
+    views: 345,
+    id: 3,
+  },
+];
 
 export const trending = (req, res) =>
   res.render("home", { pageTitle: "Home", fakeUser, videos });

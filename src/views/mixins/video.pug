@@ -1,0 +1,10 @@
+mixin vd(info)
+    div
+        h4=info.title  
+        h4 No #{info.id}.
+        ul 
+            li #{info.rating} / 5.
+            li #{info.comments} comments.
+            li Posted #{info.createAt}.
+            li #{info.views} views.
+        hr
