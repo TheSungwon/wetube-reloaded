@@ -4,7 +4,20 @@ html(lang="ko")
         title #{pageTitle} | WeTube
         link(rel="stylesheet" href="https://unpkg.com/mvp.css")
 
-    body 
+    body
+        header
+            if fakeUser.username
+                small Hello #{fakeUser.username}
+            nav    
+                ul 
+                    if fakeUser.loggedIn
+                        li
+                            a(href="/logout") Log Out
+                    else
+                        li
+                            a(href="/login") Login
+
+            h1=pageTitle
         main
             block content
         include partials/footer.pug
