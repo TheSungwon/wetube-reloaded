@@ -1,7 +1,8 @@
 import express from "express";
 import {
   watch,
-  edit,
+  getEdit,
+  postEdit,
   deleteVideo,
   upload,
 } from "../controllers/videoController";
@@ -10,7 +11,12 @@ const videoRouter = express.Router();
 
 videoRouter.get("/", (req, res) => res.send("videos "));
 videoRouter.get("/:id(\\d+)", watch);
-videoRouter.get("/:id(\\d+)/edit", edit);
+
+// videoRouter.get("/:id(\\d+)/edit", getEdit);
+// videoRouter.post("/:id(\\d+)/edit", postEdit);
+//url이 같다면 ~.get ~.post 를 한 줄로 표현 --> ~.route(url) .get() .post()
+videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit);
+
 videoRouter.get("/:id(\\d+)/delete", deleteVideo);
 videoRouter.get("/upload", upload);
 
