@@ -4,7 +4,8 @@ import {
   getEdit,
   postEdit,
   deleteVideo,
-  upload,
+  getUpload,
+  postUpload,
 } from "../controllers/videoController";
 
 const videoRouter = express.Router();
@@ -18,7 +19,8 @@ videoRouter.get("/:id(\\d+)", watch);
 videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit);
 
 videoRouter.get("/:id(\\d+)/delete", deleteVideo);
-videoRouter.get("/upload", upload);
+
+videoRouter.route("/upload").get(getUpload).post(postUpload);
 
 //upload를 상단에 놓는 이유는 :id가 먼저 선언 되면 upload가 파라미터로 인식될 수 있다.
 //videos/upload --> videos/123

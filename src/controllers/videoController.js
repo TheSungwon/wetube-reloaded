@@ -3,7 +3,7 @@ const fakeUser = {
   loggedIn: true,
 };
 
-const videos = [
+let videos = [
   {
     title: "first Video",
     rating: 5,
@@ -61,4 +61,21 @@ export const postEdit = (req, res) => {
 };
 export const search = (req, res) => res.send("search");
 export const deleteVideo = (req, res) => res.send("Delete video");
-export const upload = (req, res) => res.send("upload video");
+
+export const getUpload = (req, res) =>
+  res.render("upload", { fakeUser, pageTitle: "upload Video" });
+export const postUpload = (req, res) => {
+  console.log(req.body);
+  const { title } = req.body;
+  const newVideo = {
+    title,
+    rating: 0,
+    comments: 0,
+    createAt: "Just now",
+    views: 0,
+    id: videos.length + 1,
+  };
+
+  videos.push(newVideo);
+  return res.redirect("/");
+};

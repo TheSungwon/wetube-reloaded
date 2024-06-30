@@ -11,12 +11,18 @@ html(lang="ko")
 
             nav    
                 ul 
+                    li 
+                        a(href="/") Home
                     if fakeUser.loggedIn
                         li
                             a(href="/logout") Log Out
                     else
                         li
                             a(href="/login") Login
+            
+                    li
+                        a(href="/videos/upload") Upload Video
+
 
             h1=pageTitle
         main
