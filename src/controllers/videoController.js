@@ -1,43 +1,25 @@
+import Video from "../models/Video";
+
 const fakeUser = {
   username: "user5434",
   loggedIn: true,
 };
 
-let videos = [
-  {
-    title: "first Video",
-    rating: 5,
-    comments: 2,
-    createAt: "2 minutes ago",
-    views: 345,
-    id: 1,
-  },
-  {
-    title: "second Video",
-    rating: 5,
-    comments: 2,
-    createAt: "2 minutes ago",
-    views: 1,
-    id: 2,
-  },
-  {
-    title: "third Video",
-    rating: 5,
-    comments: 2,
-    createAt: "2 minutes ago",
-    views: 345,
-    id: 3,
-  },
-];
+//mongoose는 더 이상 callback함수를 지원하지 않음. promise로 불러와야함.
+//Video.find({}, (error, document) => {}); callback 사용불가
 
-export const trending = (req, res) =>
-  res.render("home", { pageTitle: "Home", fakeUser, videos });
+//await을 사용하려면 function에 async 선언
+export const home = async (req, res) => {
+  const videos = await Video.find({});
+  console.log(videos);
+  return res.render("home", { pageTitle: "Home", fakeUser, videos });
+};
 
 export const watch = (req, res) => {
   const { id } = req.params;
-  const video = videos[id - 1];
+
   return res.render("watch", {
-    pageTitle: `Watching : ${video.title}`,
+    pageTitle: `Watching`,
     fakeUser,
     video,
   });
@@ -45,10 +27,9 @@ export const watch = (req, res) => {
 
 export const getEdit = (req, res) => {
   const { id } = req.params;
-  const video = videos[id - 1];
 
   return res.render("edit", {
-    pageTitle: `Editing : ${video.title}`,
+    pageTitle: `Editing`,
     fakeUser,
     video,
   });
@@ -56,7 +37,7 @@ export const getEdit = (req, res) => {
 export const postEdit = (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
-  videos[id - 1].title = title;
+
   return res.redirect(`/videos/${id}`);
 };
 export const search = (req, res) => res.send("search");
@@ -64,18 +45,10 @@ export const deleteVideo = (req, res) => res.send("Delete video");
 
 export const getUpload = (req, res) =>
   res.render("upload", { fakeUser, pageTitle: "upload Video" });
+
 export const postUpload = (req, res) => {
   console.log(req.body);
   const { title } = req.body;
-  const newVideo = {
-    title,
-    rating: 0,
-    comments: 0,
-    createAt: "Just now",
-    views: 0,
-    id: videos.length + 1,
-  };
 
-  videos.push(newVideo);
   return res.redirect("/");
 };
