@@ -1,3 +1,4 @@
+import "./db";
 import express from "express";
 // const express = require("express"); import와 같은 표현
 import morgan from "morgan";

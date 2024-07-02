@@ -76,3 +76,23 @@ app.set("views", proess.cwd() + "/src/views")
 ----------
 MVP style
 <link rel="stylesheet" href="https://unpkg.com/mvp.css"> 
+
+
+-----
+
+mongoDB install, cmd -> mongod 커맨드 입력
+1(windows 기준 ->  설치, 환경변수(Path에 mongodb bin폴더 경로 입력))
+2 C:\\data\\db\\ 폴더 생성
+3 mongod 커맨드 입력
+
+mongoDB Shell install
+1. zip 파일 압축 해제, bin 폴더 환경변수 등록
+2. mongod
+3. mongosh
+
+npm install mongoose
+1. db.js 생성
+
+
+mongoose는 node.js와 monghDB를 연결.
+
