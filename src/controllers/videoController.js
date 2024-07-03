@@ -53,11 +53,22 @@ export const deleteVideo = (req, res) => res.send("Delete video");
 export const getUpload = (req, res) =>
   res.render("upload", { fakeUser, pageTitle: "upload Video" });
 
-export const postUpload = (req, res) => {
+export const postUpload = async (req, res) => {
   console.log(req.body);
   const { title, description, hashtags } = req.body;
   console.log(title, description, hashtags);
-  const video = new Video({
+  // const video = new Video({
+  //   title,
+  //   description,
+  //   createdAt: Date.now(),
+  //   hashtags: hashtags.split(",").map((word) => `#${word}`),
+  //   meta: {
+  //     views: 0,
+  //     rating: 0,
+  //   },
+  // });
+  // await video.save(); 또는 아래와 같이 create로 생성
+  Video.create({
     title,
     description,
     createdAt: Date.now(),
@@ -67,6 +78,5 @@ export const postUpload = (req, res) => {
       rating: 0,
     },
   });
-  console.log(video);
   return res.redirect("/");
 };
