@@ -28,7 +28,6 @@ export const watch = (req, res) => {
   return res.render("watch", {
     pageTitle: `Watching`,
     fakeUser,
-    video,
   });
 };
 
@@ -38,7 +37,6 @@ export const getEdit = (req, res) => {
   return res.render("edit", {
     pageTitle: `Editing`,
     fakeUser,
-    video,
   });
 };
 export const postEdit = (req, res) => {

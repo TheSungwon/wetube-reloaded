@@ -4,8 +4,8 @@ block content
     if errorMessage
         span=errorMessage
     form(method = "POST")
-        input(placeholder="TITLE", type="text", name="title")
-        input(placeholder="DESCRIPTION", type="text", required, name="description")
+        input(placeholder="TITLE", type="text", required, name="title", maxlength=80)
+        input(placeholder="DESCRIPTION", type="text", required, name="description", minlength=20)
         input(placeholder="HASH TAGS, separated by comma", type="text", required, name="hashtags")
         
         input(type="submit", value="upload Video")
