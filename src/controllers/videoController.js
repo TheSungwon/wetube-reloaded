@@ -68,15 +68,25 @@ export const postUpload = async (req, res) => {
   //   },
   // });
   // await video.save(); 또는 아래와 같이 create로 생성
-  Video.create({
-    title,
-    description,
-    createdAt: Date.now(),
-    hashtags: hashtags.split(",").map((word) => `#${word}`),
-    meta: {
-      views: 0,
-      rating: 0,
-    },
-  });
-  return res.redirect("/");
+  try {
+    await Video.create({
+      title,
+      description,
+      // createdAt: Date.now(),
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      // meta: {
+      // views: 0,
+      // rating: 0,
+      // },
+    });
+    return res.redirect("/");
+  } catch (error) {
+    console.log(`errorrrrrrrrrrrrr, ${error}`);
+
+    return res.render("upload", {
+      fakeUser,
+      pageTitle: "upload Video",
+      errorMessage: error._message,
+    });
+  }
 };

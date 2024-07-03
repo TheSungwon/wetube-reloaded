@@ -4,8 +4,9 @@ mixin vd(video)
             a(href=`/videos/${video.id}`)=video.title
         h4 No #{video.id}.
         ul 
-            li #{video.rating} / 5.
+            li #{video.meta.rating} / 5.
             li #{video.comments} comments.
             li Posted #{video.createAt}.
-            li #{video.views} views.
+            li #{video.meta.views} views.
+            li < HashTags /  #{video.hashtags.map(tags=>`${tags} `)} >
         hr
