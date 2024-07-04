@@ -55,11 +55,22 @@ export const getEdit = async (req, res) => {
     });
   }
 };
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
+  const { title, description, hashtags } = req.body;
+  const video = await Video.findById(id);
 
-  return res.redirect(`/videos/${id}`);
+  if (!video) {
+    return res.render("404", { fakeUser, pageTitle: "not found" });
+  } else {
+    video.title = title;
+    video.description = description;
+    video.hashtags = hashtags
+      .split(",")
+      .map((word) => (word.startsWith("#") ? word : `#${word}`));
+    await video.save();
+    return res.redirect(`/videos/${id}`);
+  }
 };
 export const search = (req, res) => res.send("search");
 export const deleteVideo = (req, res) => res.send("Delete video");
@@ -87,7 +98,9 @@ export const postUpload = async (req, res) => {
       title,
       description,
       // createdAt: Date.now(),
-      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      hashtags: hashtags
+        .split(",")
+        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
       // meta: {
       // views: 0,
       // rating: 0,
