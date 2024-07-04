@@ -58,17 +58,29 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.findById(id);
-
+  // const video = await Video.findById(id);
+  const video = await Video.exists({ _id: id });
+  //exists는 argument에 id를 받지않고 filter를 받음.
+  //video를 find해서 예외처리보다는 exists로 해결
+  console.log(video);
   if (!video) {
     return res.render("404", { fakeUser, pageTitle: "not found" });
   } else {
-    video.title = title;
-    video.description = description;
-    video.hashtags = hashtags
-      .split(",")
-      .map((word) => (word.startsWith("#") ? word : `#${word}`));
-    await video.save();
+    // video.title = title;
+    // video.description = description;
+    // video.hashtags = hashtags
+    //   .split(",")
+    //   .map((word) => (word.startsWith("#") ? word : `#${word}`));
+    // await video.save();
+
+    //위 주석처럼 update 도 가능. But
+    await Video.findByIdAndUpdate(id, {
+      title,
+      description,
+      hashtags: hashtags
+        .split(",")
+        .map((word) => (word.startsWith("#") ? word : `#${word}`)),
+    });
     return res.redirect(`/videos/${id}`);
   }
 };
