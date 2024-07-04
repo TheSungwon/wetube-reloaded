@@ -11,5 +11,16 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
+//middleware
+videoSchema.pre("save", async function () {
+  console.log(`we are about to save : ${this}`);
+  //this.title = "~~~"; title이 middleware에 의해 save 전에 변경됨
+
+  this.hashtags = this.hashtags[0]
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
+});
+//save에는 가능하지만 update는 불가.
+
 const Video = mongoose.model("Video", videoSchema);
 export default Video;
