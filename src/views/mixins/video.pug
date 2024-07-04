@@ -12,5 +12,7 @@ mixin vd(video)
             li #{video.comments} comments.
             li Posted #{video.createAt}.
             li #{video.meta.views} views.
-            li < HashTags /  #{video.hashtags.map(tags=>`${tags} `)} >
+            p HashTags
+            each hashtag in video.hashtags
+                li=hashtag
         hr
