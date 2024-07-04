@@ -6,14 +6,14 @@ html(lang="ko")
 
     body
         header
-            if fakeUser.username
+            if fakeUser
                 small Hello #{fakeUser.username}
 
             nav    
                 ul 
                     li 
                         a(href="/") Home
-                    if fakeUser.loggedIn
+                    if fakeUser
                         li
                             a(href="/logout") Log Out
                     else

@@ -5,5 +5,8 @@ block content
     h1=video.title
 
     form(method="POST")
-        input(name="title", placeholder="video title", value=`${video.title}`, required)
+        input(name="title", placeholder="video title", value=`${video.title}`, required, maxlength=80)
+        input(placeholder="DESCRIPTION", type="text", required, name="description", minlength=20. value=video.description)
+        input(placeholder="HASH TAGS, separated by comma", type="text", required, name="hashtags", value=video.hashtags.join())
+        
         input(type="submit", value="save")

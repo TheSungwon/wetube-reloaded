@@ -23,6 +23,7 @@ videoRouter.get("/:id([0-9a-f]{24})/delete", deleteVideo);
 
 videoRouter.route("/upload").get(getUpload).post(postUpload);
 
+videoRouter.get("/*", (req, res) => res.render("404"));
 //upload를 상단에 놓는 이유는 :id가 먼저 선언 되면 upload가 파라미터로 인식될 수 있다.
 //videos/upload --> videos/123
 //but, 정규표현식을 사용하면 됨

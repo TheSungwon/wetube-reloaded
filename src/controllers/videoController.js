@@ -18,28 +18,42 @@ const fakeUser = {
 // - redirect(), sendStatus(), end() 등등 포함 (express에서 오류 발생)
 export const home = async (req, res) => {
   const videos = await Video.find({});
-  console.log(videos);
-  return res.render("home", { pageTitle: "Home", fakeUser, videos });
+  if (videos) {
+    return res.render("home", { pageTitle: "Home", fakeUser, videos });
+  } else {
+    return res.render("404", { fakeUser, pageTitle: "not found" });
+  }
 };
 
 export const watch = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
-  console.log(video);
-  return res.render("watch", {
-    pageTitle: video.title,
-    fakeUser,
-    video,
-  });
+  // const video = await Video.findById(id).exec(); exec() 생략가능
+
+  if (video) {
+    return res.render("watch", {
+      pageTitle: video.title,
+      fakeUser,
+      video,
+    });
+  } else {
+    return res.render("404", { fakeUser, pageTitle: "not found" });
+  }
 };
 
-export const getEdit = (req, res) => {
+export const getEdit = async (req, res) => {
   const { id } = req.params;
+  const video = await Video.findById(id);
 
-  return res.render("edit", {
-    pageTitle: `Editing`,
-    fakeUser,
-  });
+  if (!video) {
+    return res.render("404", { fakeUser, pageTitle: "not found" });
+  } else {
+    return res.render("edit", {
+      pageTitle: `EDIT /  ${video.title}`,
+      fakeUser,
+      video,
+    });
+  }
 };
 export const postEdit = (req, res) => {
   const { id } = req.params;
