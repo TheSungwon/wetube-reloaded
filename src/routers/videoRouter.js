@@ -10,15 +10,16 @@ import {
 
 const videoRouter = express.Router();
 
+//mongoDB id는 hexaDecimal String (24글자, 16진수) 0~9, a~f
 videoRouter.get("/", (req, res) => res.send("videos "));
-videoRouter.get("/:id(\\d+)", watch);
+videoRouter.get("/:id([0-9a-f]{24})", watch);
 
 // videoRouter.get("/:id(\\d+)/edit", getEdit);
 // videoRouter.post("/:id(\\d+)/edit", postEdit);
 //url이 같다면 ~.get ~.post 를 한 줄로 표현 --> ~.route(url) .get() .post()
-videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit);
+videoRouter.route("/:id([0-9a-f]{24})/edit").get(getEdit).post(postEdit);
 
-videoRouter.get("/:id(\\d+)/delete", deleteVideo);
+videoRouter.get("/:id([0-9a-f]{24})/delete", deleteVideo);
 
 videoRouter.route("/upload").get(getUpload).post(postUpload);
 

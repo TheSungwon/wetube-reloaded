@@ -22,12 +22,14 @@ export const home = async (req, res) => {
   return res.render("home", { pageTitle: "Home", fakeUser, videos });
 };
 
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
   const { id } = req.params;
-
+  const video = await Video.findById(id);
+  console.log(video);
   return res.render("watch", {
-    pageTitle: `Watching`,
+    pageTitle: video.title,
     fakeUser,
+    video,
   });
 };
 
