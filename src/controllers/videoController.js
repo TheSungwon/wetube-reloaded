@@ -55,6 +55,7 @@ export const getEdit = async (req, res) => {
     });
   }
 };
+
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
@@ -82,13 +83,22 @@ export const postEdit = async (req, res) => {
     return res.redirect(`/videos/${id}`);
   }
 };
+
 export const search = async (req, res) => {
   const { keyword } = req.query;
+  let videos = [];
   console.log(keyword);
   if (keyword) {
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(`${keyword}`, "i"), //^는 앞부분이 일치, "i"는 대소문자구분X
+        //${keyword}$ 면 뒷부분이 일치, keyword만 적는다면 일부 일치
+      },
+    });
   }
-  return res.render("search", { pageTitle: "Search✔" });
+  return res.render("search", { pageTitle: "Search✔", videos });
 };
+
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   const video = await Video.exists({ _id: id });
