@@ -17,7 +17,7 @@ const fakeUser = {
 // 2. render한 것은 다시 render할 수 없음
 // - redirect(), sendStatus(), end() 등등 포함 (express에서 오류 발생)
 export const home = async (req, res) => {
-  const videos = await Video.find({});
+  const videos = await Video.find({}).sort({ createdAt: "desc" });
   if (videos) {
     return res.render("home", { pageTitle: "Home", fakeUser, videos });
   } else {
@@ -82,7 +82,13 @@ export const postEdit = async (req, res) => {
     return res.redirect(`/videos/${id}`);
   }
 };
-export const search = (req, res) => res.send("search");
+export const search = async (req, res) => {
+  const { keyword } = req.query;
+  console.log(keyword);
+  if (keyword) {
+  }
+  return res.render("search", { pageTitle: "Search✔" });
+};
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   const video = await Video.exists({ _id: id });
