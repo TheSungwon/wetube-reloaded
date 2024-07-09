@@ -83,7 +83,17 @@ export const postEdit = async (req, res) => {
   }
 };
 export const search = (req, res) => res.send("search");
-export const deleteVideo = (req, res) => res.send("Delete video");
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.exists({ _id: id });
+
+  if (video) {
+    await Video.findByIdAndDelete(id); //findByIdAndRemove는 특별한 이유가 없는한 사용하지 말 것, 이유는 mongoDB는 rollback이 안 되기 떄문.
+    return res.redirect("/");
+  } else {
+    return res.render("404", { fakeUser, pageTitle: "not found Id Delete" });
+  }
+};
 
 export const getUpload = (req, res) =>
   res.render("upload", { fakeUser, pageTitle: "upload Video" });

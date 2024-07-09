@@ -6,19 +6,16 @@ html(lang="ko")
 
     body
         header
-            if fakeUser
-                small Hello #{fakeUser.username}
+            
+            small Hello, #{fakeUser ? fakeUser.username : "Please Sign In or Sign Up"}
 
             nav    
                 ul 
                     li 
                         a(href="/") Home
-                    if fakeUser
-                        li
-                            a(href="/logout") Log Out
-                    else
-                        li
-                            a(href="/login") Login
+
+                    li
+                        a(href= fakeUser ? "/logout" : "/login")= fakeUser ? "Log Out" : "Login"
             
                     li
                         a(href="/videos/upload") Upload Video
