@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -8,6 +9,11 @@ const UserSchema = new mongoose.Schema({
   location: { type: String },
 });
 
+UserSchema.pre("save", async function () {
+  console.log("password:", this.password);
+  this.password = await bcrypt.hash(this.password, 5);
+  console.log("password encrypt: ", this.password);
+});
 const User = mongoose.model("User", UserSchema);
 
 export default User;

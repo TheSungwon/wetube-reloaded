@@ -96,3 +96,12 @@ npm install mongoose
 
 mongoose는 node.js와 monghDB를 연결.
 mongoosejs.com/docs/
+
+-----------
+
+비밀번호 hash화 -> 일방향 함수 -> 되돌릴 수 없음
+같은 입력값으로는 항상 같은 출력값이 나옴
+
+npm i bcrypt 설치
+
+rainbow table공격을 bcrypt가 막아줌
