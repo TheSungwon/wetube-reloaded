@@ -1,5 +1,6 @@
 import User from "../models/User";
 import Users from "../models/User";
+import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) =>
   res.render("join", { pageTitle: "create Account" });
@@ -34,22 +35,33 @@ export const postJoin = async (req, res) => {
     }
   }
 };
-export const getLogin = (req, res) => res.render("login");
+export const getLogin = (req, res) =>
+  res.render("login", { pageTitle: "Login" });
 export const postLogin = async (req, res) => {
+  const pageTitle = "Login";
   const { username, password } = req.body;
   console.log(username, password);
-  const exists = await User.exists({ username });
-  if (!exists) {
-    return res
-      .status(404)
-      .render("login", {
-        pageTitle: "login error",
-        errorMessage: "An Account With This Username Dose Not Exists.",
-      });
+  // const exists = await User.exists({ username });
+  const user = await User.findOne({ username });
+  if (!user) {
+    return res.status(404).render("login", {
+      pageTitle,
+      errorMessage: "An Account With This Username Dose Not Exists.",
+    });
   }
 
-  return res.render("login");
-  // return res.end();
+  const ok = await bcrypt.compare(password, user.password);
+  //bcrypt 첫번째 arg에 입력한 비번, 두번째는 db비번
+  //saltRound는 Hash를 시작 할 때 기억하고 있음.
+  console.log(ok);
+  if (!ok) {
+    return res.status(400).render("login", {
+      pageTitle,
+      errorMessage: "Wrong Password",
+    });
+  }
+  console.log("LOG USER IN! COMING SOON!");
+  return res.redirect("/");
 };
 
 export const edit = (req, res) => res.send("edit user");
