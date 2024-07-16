@@ -37,7 +37,7 @@ export const watch = async (req, res) => {
       video,
     });
   } else {
-    return res.render("404", { fakeUser, pageTitle: "not found" });
+    return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
   }
 };
 
@@ -46,7 +46,7 @@ export const getEdit = async (req, res) => {
   const video = await Video.findById(id);
 
   if (!video) {
-    return res.render("404", { fakeUser, pageTitle: "not found" });
+    return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
   } else {
     return res.render("edit", {
       pageTitle: `EDIT /  ${video.title}`,
@@ -65,7 +65,7 @@ export const postEdit = async (req, res) => {
   //video를 find해서 예외처리보다는 exists로 해결
   console.log(video);
   if (!video) {
-    return res.render("404", { fakeUser, pageTitle: "not found" });
+    return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
   } else {
     // video.title = title;
     // video.description = description;
@@ -107,7 +107,9 @@ export const deleteVideo = async (req, res) => {
     await Video.findByIdAndDelete(id); //findByIdAndRemove는 특별한 이유가 없는한 사용하지 말 것, 이유는 mongoDB는 rollback이 안 되기 떄문.
     return res.redirect("/");
   } else {
-    return res.render("404", { fakeUser, pageTitle: "not found Id Delete" });
+    return res
+      .status(404)
+      .render("404", { fakeUser, pageTitle: "not found Id Delete" });
   }
 };
 
@@ -144,7 +146,7 @@ export const postUpload = async (req, res) => {
   } catch (error) {
     console.log(`errorrrrrrrrrrrrr, ${error}`);
 
-    return res.render("upload", {
+    return res.status(400).render("upload", {
       fakeUser,
       pageTitle: "upload Video",
       errorMessage: error._message,

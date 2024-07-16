@@ -10,7 +10,7 @@ export const postJoin = async (req, res) => {
   const pageTitle = "Join";
 
   if (password !== password2) {
-    return res.render("join", {
+    return res.status(400).render("join", {
       pageTitle,
       errorMessage: "Password confirmation dose not match.",
     });
@@ -18,7 +18,7 @@ export const postJoin = async (req, res) => {
 
   const exists = await User.exists({ $or: [{ username }, { email }] }); //username, email 2개중 or조건으로 유니크인지 검색함
   if (exists) {
-    res.render("join", {
+    res.status(400).render("join", {
       pageTitle,
       errorMessage: "This Username Or Email is Already Taken.",
     });
