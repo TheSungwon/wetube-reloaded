@@ -30,9 +30,9 @@ app.use((req, res, next) => {
 });
 
 app.get("/add-one", (req, res, next) => {
-  console.log("======================", req.session);
-  req.session.something += 1;
-  req.session.idcheck = req.session.id;
+  //   console.log("======================", req.session);
+  //   req.session.something += 1;
+  req.session.sessionIdCheck = req.session.id;
 
   return res.send(req.session);
 });

@@ -37,6 +37,7 @@ export const postJoin = async (req, res) => {
 };
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
+
 export const postLogin = async (req, res) => {
   const pageTitle = "Login";
   const { username, password } = req.body;
@@ -60,6 +61,10 @@ export const postLogin = async (req, res) => {
       errorMessage: "Wrong Password",
     });
   }
+
+  //login successful -> session에 담기
+  req.session.loggedIn = true;
+  req.session.user = user;
   console.log("LOG USER IN! COMING SOON!");
   return res.redirect("/");
 };
