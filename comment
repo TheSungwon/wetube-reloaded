@@ -105,3 +105,35 @@ mongoosejs.com/docs/
 npm i bcrypt 설치
 
 rainbow table공격을 bcrypt가 막아줌
+
+
+-------
+npm i express-session
+
+- 기본적으로 서버와 유저의 연결은 stateless한 성질을 띈다.(wifi가 쭉 연결되어 있는것과 다르게)
+- 이러한 연결 특성으로 인해 매번 연결시 유저는 새로이 서버에 자신을 확인 받아야 함
+- 만약 증표(증거)가 있다면 다시 연결시 유저에 대한 확인이 쉬워짐
+- 쿠기가 증표 역활을 함. 유저는 서버 연결시 서버에게 증표를 건네받음(쿠키는 유저가 보관)
+- 서버는 session으로 해당 증표를 가진 유저의 기록을 저장해둠
+- 유저가 증표(쿠키)를 가지고 오면 서버는 저장되어 있는 session을 통해 유저를 쉽게 확인
+
+express-session
+Express용 세션 미들웨어
+세션 데이터는 쿠키 자체에 저장되지 않고 세션 ID에만 저장됩니다. 세션 데이터는 서버 측에 저장됩니다.
+npm i express-session
+https://www.npmjs.com/package/express-session
+
+Session 사용 예시
+https://github.com/expressjs/session#example
+
+req.session.id 또는 req.sessionID
+브라우저가 request할 때 같이 보내는 session id
+
+resave (변경 사항이 없어도 저장)
+request하는 동안 세션이 수정되지 않은 경우에도 세션이 세션 저장소에 다시 저장되도록 합니다.
+https://github.com/expressjs/session#resave
+
+saveUninitialized (세션 초기화 전에도 저장)
+"초기화되지 않은" 세션을 저장소에 강제로 저장합니다.
+https://github.com/expressjs/session#saveuninitialized
+----------
