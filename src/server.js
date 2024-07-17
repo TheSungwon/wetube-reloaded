@@ -5,6 +5,7 @@ import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import session from "express-session";
+import { localsMiddlewares } from "./middlewares";
 
 const app = express();
 const logger = morgan("dev");
@@ -21,20 +22,27 @@ app.use(
     saveUninitialized: true,
   })
 ); //session 미들웨어가 사이트로 들어오는 모든 것을 기억 함.
-app.use((req, res, next) => {
-  //   console.log(req.headers);
-  req.sessionStore.all((error, sessions) => {
-    console.log(sessions);
-  });
-  next();
-});
+
+// app.use((req, res, next) => {
+//   //   console.log(req.headers);
+//   req.sessionStore.all((error, sessions) => {
+//     console.log(sessions);
+//   });
+//   next();
+// });
+
+app.use(localsMiddlewares); // Add to response locals object middleware
+//순서가 중요함. session middleware 다음에 위치.
 
 app.get("/add-one", (req, res, next) => {
   //   console.log("======================", req.session);
   //   req.session.something += 1;
   req.session.sessionIdCheck = req.session.id;
-
-  return res.send(req.session);
+  const check = {
+    req: req.session,
+    res: res.locals,
+  };
+  return res.send(check);
 });
 
 app.use("/", rootRouter);
