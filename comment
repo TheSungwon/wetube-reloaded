@@ -155,3 +155,13 @@ template PUG는 response locals에 접근할 수 있다.
 pug에서는 ${something}으로 접근 할 수 있음.
 
 
+--------
+connect-mongo는 세션을 MongoDB에 저장
+install : npm i connect-mongo
+
+import MongoStore from "connect-mongo"
+session에 store: MongoStore.create({
+      mongoUrl: "mongodb://127.0.0.1:27017/wetube",
+    }), 추가
+
+    

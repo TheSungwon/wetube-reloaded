@@ -6,6 +6,7 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import session from "express-session";
 import { localsMiddlewares } from "./middlewares";
+import MongoStore from "connect-mongo";
 
 const app = express();
 const logger = morgan("dev");
@@ -20,6 +21,9 @@ app.use(
     secret: "hello world!",
     resave: true,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: "mongodb://127.0.0.1:27017/wetube",
+    }),
   })
 ); //session 미들웨어가 사이트로 들어오는 모든 것을 기억 함.
 
