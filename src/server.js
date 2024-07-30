@@ -18,11 +18,14 @@ app.use(express.urlencoded({ extended: true })); //form을 사용하기 위한 �
 
 app.use(
   session({
-    secret: "hello world!",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 10 * 60 * 24 * 1, //밀리세컨으로 쿠키 만료시간 지정
+    },
     store: MongoStore.create({
-      mongoUrl: "mongodb://127.0.0.1:27017/wetube",
+      mongoUrl: process.env.DB_URL,
     }),
   })
 ); //session 미들웨어가 사이트로 들어오는 모든 것을 기억 함.

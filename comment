@@ -164,4 +164,9 @@ session에 store: MongoStore.create({
       mongoUrl: "mongodb://127.0.0.1:27017/wetube",
     }), 추가
 
-    
+
+-------------------
+.env
+gitignore에 .env 추가
+.env파일은 관습적으로 대문자로 적기.
+.env파일에 접근 process.env.***
