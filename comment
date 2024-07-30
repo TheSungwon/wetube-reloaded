@@ -170,3 +170,9 @@ session에 store: MongoStore.create({
 gitignore에 .env 추가
 .env파일은 관습적으로 대문자로 적기.
 .env파일에 접근 process.env.***
+npm i dotenv
+
+dotenv는 가장 먼저 로드되어야 하므로 최상단에 선언 (init.js가 제일먼저 실행되므로 init.js에 선언)
+require("dotenv").config() 로 사용하려면 dotenv를 사용하려는 
+모든 파일에 추가해줘야함.
+대신에 import "dotenv/config"; 로 사용해야함
