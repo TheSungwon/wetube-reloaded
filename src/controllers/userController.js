@@ -43,7 +43,7 @@ export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   console.log(username, password);
   // const exists = await User.exists({ username });
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username, socialOnly: false }); // github는 password가 없으므로
   if (!user) {
     return res.status(404).render("login", {
       pageTitle,
@@ -137,15 +137,10 @@ export const finishGithubLogin = async (req, res) => {
     if (!email) {
       return res.redirect("/login"); // 이메일 없으면 redirect
     }
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      //이메일 있으면 로그인
-      req.session.loggedIn = true;
-      req.session.user = existingUser;
-      return res.redirect("/");
-    } else {
-      // 없으면 create 하고 로그인
-      const user = await User.create({
+    const user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({
+        avatarUrl: userData.avatar_url,
         name: userData.name ?? userData.login,
         username: userData.login,
         email,
@@ -153,6 +148,7 @@ export const finishGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userData.location ?? "",
       });
+    } else {
       req.session.loggedIn = true;
       req.session.user = user;
       return res.redirect("/");
@@ -164,5 +160,8 @@ export const finishGithubLogin = async (req, res) => {
 
 export const edit = (req, res) => res.send("edit user");
 export const remove = (req, res) => res.send("remove user");
-export const logout = (req, res) => res.send("logout");
+export const logout = (req, res) => {
+  req.session.destroy();
+  return res.redirect("/");
+};
 export const see = (req, res) => res.send("see user");

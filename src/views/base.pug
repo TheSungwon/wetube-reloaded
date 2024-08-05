@@ -16,7 +16,7 @@ html(lang="ko")
                         a(href="/") Home
 
                     li
-                        a(href= loggedIn ? "/logout" : "/login")= loggedIn ? "Log Out" : "Login"
+                        a(href= loggedIn ? "/users/logout" : "/login")= loggedIn ? "Log Out" : "Login"
 
                     if loggedIn
                         li 
