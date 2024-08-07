@@ -19,8 +19,11 @@ html(lang="ko")
                         a(href= loggedIn ? "/users/logout" : "/login")= loggedIn ? "Log Out" : "Login"
 
                     if loggedIn
-                        li 
-                            a(href="/my-profile") #{loggedInUser.name} 의 Profile
+                        li
+                            a(href="/users/edit") Edit Profile
+
+                        //- li 
+                        //-     a(href="/my-profile") #{loggedInUser.name} 의 Profile
                         
             
                     li
