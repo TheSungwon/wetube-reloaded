@@ -5,3 +5,23 @@ export const localsMiddlewares = (req, res, next) => {
   console.log(res.locals);
   next();
 };
+
+//로그인해야만 접근할 수 있게
+export const protectorMiddleware = (req, res, next) => {
+  if (req.session.loggedIn) {
+    next();
+  } else {
+    return res.redirect("/login");
+  }
+
+  // req.session.loggedIn ? next() : res.redirect("/login");
+};
+
+//로그인 안 해야 접근할 수 있게
+export const publicOnlyMiddleware = (req, res, next) => {
+  if (!req.session.loggedIn) {
+    return next();
+  } else {
+    return res.redirect("/");
+  }
+};
