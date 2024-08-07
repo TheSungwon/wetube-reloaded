@@ -7,6 +7,7 @@ import {
   getUpload,
   postUpload,
 } from "../controllers/videoController";
+import { protectorMiddleware } from "../middlewares";
 
 const videoRouter = express.Router();
 
@@ -17,11 +18,22 @@ videoRouter.get("/:id([0-9a-f]{24})", watch);
 // videoRouter.get("/:id(\\d+)/edit", getEdit);
 // videoRouter.post("/:id(\\d+)/edit", postEdit);
 //url이 같다면 ~.get ~.post 를 한 줄로 표현 --> ~.route(url) .get() .post()
-videoRouter.route("/:id([0-9a-f]{24})/edit").get(getEdit).post(postEdit);
+videoRouter
+  .route("/:id([0-9a-f]{24})/edit")
+  .all(protectorMiddleware)
+  .get(getEdit)
+  .post(postEdit);
 
-videoRouter.get("/:id([0-9a-f]{24})/delete", deleteVideo);
+videoRouter
+  .route("/:id([0-9a-f]{24})/delete")
+  .all(protectorMiddleware)
+  .get(deleteVideo);
 
-videoRouter.route("/upload").get(getUpload).post(postUpload);
+videoRouter
+  .route("/upload")
+  .all(protectorMiddleware)
+  .get(getUpload)
+  .post(postUpload);
 
 videoRouter.get("/*", (req, res) => res.render("404"));
 //upload를 상단에 놓는 이유는 :id가 먼저 선언 되면 upload가 파라미터로 인식될 수 있다.
