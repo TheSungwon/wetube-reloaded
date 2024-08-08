@@ -170,13 +170,52 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
-  await User.findByIdAndUpdate(_id, {
-    name,
-    email,
-    username,
-    location,
+
+  const exists = await User.exists({
+    $or: [
+      {
+        username,
+        _id: {
+          $ne: _id,
+        },
+      },
+      {
+        email,
+        _id: {
+          $ne: _id,
+        },
+      },
+    ],
   });
-  return res.render("edit-profile");
+  console.log(exists, "-------------");
+  if (exists) {
+    return res.status(400).send("already username or email exists");
+  }
+
+  const updateUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    {
+      new: true,
+    }
+  );
+
+  req.session.user = updateUser;
+  //session은 업데이트 되지 않기 때문에 다시 입력
+  // req.session.user = {
+  //   ...req.session.user,
+  //   name,
+  //   email,
+  //   username,
+  //   location,
+  // };
+
+  return res.redirect("/users/edit");
 };
 export const remove = (req, res) => res.send("remove user");
 export const logout = (req, res) => {
