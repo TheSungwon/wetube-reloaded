@@ -223,3 +223,14 @@ export const logout = (req, res) => {
   return res.redirect("/");
 };
 export const see = (req, res) => res.send("see user");
+
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    //github 계정은 비밀번호가 없으므로 접근 X
+    return res.redirect("/");
+  }
+  return res.render("user/change-password", { pageTitle: "change Password" });
+};
+export const postChangePassword = (req, res) => {
+  return res.redirect("/");
+};
