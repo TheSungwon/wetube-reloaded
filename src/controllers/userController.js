@@ -138,7 +138,7 @@ export const finishGithubLogin = async (req, res) => {
     if (!email) {
       return res.redirect("/login"); // 이메일 없으면 redirect
     }
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email }); // const로 하지 않도록 주의
     if (!user) {
       user = await User.create({
         avatarUrl: userData.avatar_url,
@@ -149,11 +149,10 @@ export const finishGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userData.location ?? "",
       });
-    } else {
-      req.session.loggedIn = true;
-      req.session.user = user;
-      return res.redirect("/");
     }
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
   } else {
     return res.redirect("/login");
   }
@@ -227,18 +226,20 @@ export const logout = (req, res) => {
 };
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id);
+  // const user = await User.findById(id);
+  const user = await User.findById(id).populate("videos");
+  console.log(user);
 
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
 
-  const videos = await Video.find({ owner: user._id });
+  // const videos = await Video.find({ owner: user._id });
 
   return res.render("users/profile", {
     pageTitle: `${user.name}`,
     user,
-    videos,
+    // videos,
   });
 };
 

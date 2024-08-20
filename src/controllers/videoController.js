@@ -144,7 +144,7 @@ export const postUpload = async (req, res) => {
   // });
   // await video.save(); 또는 아래와 같이 create로 생성
   try {
-    await Video.create({
+    const newVideo = await Video.create({
       owner: _id,
       title,
       description,
@@ -156,6 +156,12 @@ export const postUpload = async (req, res) => {
       // rating: 0,
       // },
     });
+
+    const user = await User.findById(_id);
+    console.log(user, "❤❤❤❤❤");
+    user.videos.push(newVideo._id);
+    user.save();
+    console.log(user, "❤❤❤❤❤");
     return res.redirect("/");
   } catch (error) {
     console.log(`errorrrrrrrrrrrrr, ${error}`);
