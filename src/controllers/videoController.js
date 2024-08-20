@@ -1,3 +1,4 @@
+import User from "../models/User";
 import Video from "../models/Video";
 
 const fakeUser = {
@@ -28,6 +29,7 @@ export const home = async (req, res) => {
 export const watch = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
+  const owner = await User.findById(video.owner);
   // const video = await Video.findById(id).exec(); exec() 생략가능
 
   if (video) {
@@ -35,6 +37,7 @@ export const watch = async (req, res) => {
       pageTitle: video.title,
       fakeUser,
       video,
+      owner,
     });
   } else {
     return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
@@ -117,10 +120,17 @@ export const getUpload = (req, res) =>
   res.render("upload", { fakeUser, pageTitle: "upload Video" });
 
 export const postUpload = async (req, res) => {
-  const { path: fileUrl } = req.file;
-  console.log(req.body);
-  const { title, description, hashtags } = req.body;
-  console.log(title, description, hashtags);
+  // const {user} = req.session;
+  // const { path: fileUrl } = req.file;
+  // const { title, description, hashtags } = req.body;
+
+  const {
+    session: {
+      user: { _id },
+    },
+    file: { path: fileUrl },
+    body: { title, description, hashtags },
+  } = req;
   // const video = new Video({
   //   title,
   //   description,
@@ -134,6 +144,7 @@ export const postUpload = async (req, res) => {
   // await video.save(); 또는 아래와 같이 create로 생성
   try {
     await Video.create({
+      owner: _id,
       title,
       description,
       fileUrl,

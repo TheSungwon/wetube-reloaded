@@ -1,7 +1,7 @@
 extends base.pug
 
 block content 
-    video(src="/" + video.fileUrl, controls, width="300", heigth="300")
+    video(src="/" + video.fileUrl, controls, width="300", height="300")
     
     div
         h1 title : #{video.title}
@@ -12,6 +12,12 @@ block content
         ul
             each tag in video.hashtags
                 li=tag
+    div
+        small Uploaded By #{owner.name}
+        
+
+    //- video.owner는 ObjectId, string변환
+    if String(video.owner) === String(loggedInUser._id) 
         a(href=`${video.id}/edit`) Edit Video &rarr;
         br
         a(href=`${video.id}/delete`) Delete Video 💥
