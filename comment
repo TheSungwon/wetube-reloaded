@@ -202,3 +202,15 @@ req.file을 사용
 server.js 에 app.use("/uploads", express.static("uploads"));를 적용
 -------
 sample-videos.com
+
+----------
+webpack 설치 (react, next 등에서는 설치 안 해도 됨)
+npm i webpack webpack-cli --save-dev
+or
+npm i webpack webpack -D
+
+webpack.config.js 파일 생성
+src/client 폴더 생성 (or asset .. whatever)
+
+
+npm install -D babel-loader
