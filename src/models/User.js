@@ -14,10 +14,14 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
+//postUpload 할 때 user.save()를 함, 그렇게 되면 hash를 또 실행하게 됨
+//hash를 방지하기 위해 this.isModified를 사용해서 password가 변경됨을 감지
 UserSchema.pre("save", async function () {
-  console.log("password:", this.password);
-  this.password = await bcrypt.hash(this.password, 5);
-  console.log("password encrypt: ", this.password);
+  if (this.isModified("password")) {
+    console.log("password:", this.password);
+    this.password = await bcrypt.hash(this.password, 5);
+    console.log("password encrypt: ", this.password);
+  }
 });
 const User = mongoose.model("User", UserSchema);
 

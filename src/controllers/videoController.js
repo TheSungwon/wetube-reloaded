@@ -47,10 +47,18 @@ export const watch = async (req, res) => {
 
 export const getEdit = async (req, res) => {
   const { id } = req.params;
+  const {
+    user: { _id },
+  } = req.session;
+
   const video = await Video.findById(id);
+  console.log(typeof video.owner, typeof _id);
 
   if (!video) {
     return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
+  } else if (String(video.owner) !== String(_id)) {
+    //!== 는 생김새 뿐만 아니라 타입도 확인
+    return res.status(403).redirect("/"); //403 means forbidden
   } else {
     return res.render("edit", {
       pageTitle: `EDIT /  ${video.title}`,
@@ -63,11 +71,20 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  // const video = await Video.findById(id);
-  const video = await Video.exists({ _id: id });
+  const video = await Video.findById(id);
+  // const video = await Video.exists({ _id: id });
   //exists는 argument에 id를 받지않고 filter를 받음.
   //video를 find해서 예외처리보다는 exists로 해결
   console.log(video);
+
+  const {
+    user: { _id },
+  } = req.session;
+  if (String(video.owner) !== String(_id)) {
+    console.log("forbidden");
+    return res.status(403).redirect("/"); //403 means forbidden
+  }
+
   if (!video) {
     return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
   } else {
@@ -84,6 +101,7 @@ export const postEdit = async (req, res) => {
       description,
       hashtags: Video.formatHashtags(hashtags),
     });
+
     return res.redirect(`/videos/${id}`);
   }
 };
@@ -105,15 +123,33 @@ export const search = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.exists({ _id: id });
+  const {
+    user: { _id },
+  } = req.session;
+  const video = await Video.findById(id);
 
-  if (video) {
-    await Video.findByIdAndDelete(id); //findByIdAndRemove는 특별한 이유가 없는한 사용하지 말 것, 이유는 mongoDB는 rollback이 안 되기 떄문.
-    return res.redirect("/");
-  } else {
+  if (String(video.owner) !== String(_id)) {
+    return res.status(403).redirect("/"); //403 means forbidden
+  }
+
+  if (!video) {
     return res
       .status(404)
       .render("404", { fakeUser, pageTitle: "not found Id Delete" });
+  } else {
+    await Video.findByIdAndDelete(id); //findByIdAndRemove는 특별한 이유가 없는한 사용하지 말 것, 이유는 mongoDB는 rollback이 안 되기 떄문.
+
+    await User.findByIdAndUpdate(
+      _id,
+      {
+        $pull: { videos: id },
+      },
+      {
+        new: true,
+      }
+    );
+
+    return res.redirect("/");
   }
 };
 
