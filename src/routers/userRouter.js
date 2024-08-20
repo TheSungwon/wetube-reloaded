@@ -29,7 +29,7 @@ userRouter
   .post(postChangePassword);
 userRouter.get("/remove", remove);
 userRouter.get("/logout", protectorMiddleware, logout);
-userRouter.get("/:id(\\d+)", see);
+userRouter.get("/:id([0-9a-f]{24})", see);
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 

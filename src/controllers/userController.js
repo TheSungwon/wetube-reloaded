@@ -224,14 +224,26 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
-export const see = (req, res) => res.send("see user");
+export const see = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found" });
+  }
+
+  return res.render("users/profile", {
+    pageTitle: `${user.name}`,
+    user,
+  });
+};
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
     //github 계정은 비밀번호가 없으므로 접근 X
     return res.redirect("/");
   }
-  return res.render("user/change-password", { pageTitle: "change Password" });
+  return res.render("users/change-password", { pageTitle: "change Password" });
 };
 export const postChangePassword = async (req, res) => {
   const {
@@ -245,14 +257,14 @@ export const postChangePassword = async (req, res) => {
   const ok = await bcrypt.compare(oldPassword, user.password);
 
   if (!ok) {
-    return res.status(400).render("user/change-password", {
+    return res.status(400).render("users/change-password", {
       pageTitle: "change password",
       errorMessage: "The current password is incorrect.",
     });
   }
 
   if (newPassword !== newPasswordConfirmation) {
-    return res.status(400).render("user/change-password", {
+    return res.status(400).render("users/change-password", {
       pageTitle: "change password",
       errorMessage: "The password does not match the confirmation.",
     });
