@@ -28,8 +28,10 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+  const video = await Video.findById(id).populate("owner"); //schema의 ref
+  console.log(video);
+  // const owner = await User.findById(video.owner); 이렇게도 사용가능 하지만 populate로 대신 사용
+
   // const video = await Video.findById(id).exec(); exec() 생략가능
 
   if (video) {
@@ -37,7 +39,6 @@ export const watch = async (req, res) => {
       pageTitle: video.title,
       fakeUser,
       video,
-      owner,
     });
   } else {
     return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
