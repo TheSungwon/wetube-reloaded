@@ -199,3 +199,6 @@ form enctype="multipart/form-data"
 미들웨어 설정
 router에 설정
 req.file을 사용
+server.js 에 app.use("/uploads", express.static("uploads"));를 적용
+-------
+sample-videos.com

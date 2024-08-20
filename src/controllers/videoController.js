@@ -117,6 +117,7 @@ export const getUpload = (req, res) =>
   res.render("upload", { fakeUser, pageTitle: "upload Video" });
 
 export const postUpload = async (req, res) => {
+  const { path: fileUrl } = req.file;
   console.log(req.body);
   const { title, description, hashtags } = req.body;
   console.log(title, description, hashtags);
@@ -135,6 +136,7 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title,
       description,
+      fileUrl,
       // createdAt: Date.now(),
       hashtags: Video.formatHashtags(hashtags),
       // meta: {
