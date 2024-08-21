@@ -3,7 +3,7 @@ extends base.pug
 block content 
     video(src="/" + video.fileUrl, controls, width="300", height="300")
     
-    div
+//-    div
         h1 title : #{video.title}
         p=video.description
         small=video.createdAt
@@ -22,3 +22,6 @@ block content
         a(href=`${video.id}/edit`) Edit Video &rarr;
         br
         a(href=`${video.id}/delete`) Delete Video 💥
+
+block script
+    script(src="/static/js/videoPlayer.js")
