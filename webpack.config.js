@@ -11,7 +11,7 @@ module.exports = {
   ],
   mode: "development",
   watch: true, // npm run assets 자동실행
-  clean: true, // build 전 output folder를 clean
+  // clean: true, // build 전 output folder를 clean
   output: {
     filename: "js/main.js",
     // path: "./assets/js",
