@@ -1,13 +1,19 @@
 console.log(__dirname, "~~~~~~~~~~"); //absolute path
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 module.exports = {
   entry: "./src/client/js/main.js",
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/styles.css",
+    }),
+  ],
   mode: "development",
   output: {
-    filename: "main.js",
+    filename: "js/main.js",
     // path: "./assets/js",
-    path: path.resolve(__dirname, "assets", "js"),
+    path: path.resolve(__dirname, "assets"),
   },
   module: {
     rules: [
@@ -22,7 +28,8 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"], //webpack은 끝에서 시작
+        // use: ["style-loader", "css-loader", "sass-loader"], //webpack은 끝에서 시작
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"], //css파일을 따로 만들어 줌
       },
     ],
   },
