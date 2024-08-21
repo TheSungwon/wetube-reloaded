@@ -220,3 +220,8 @@ npm install --save-dev style-loader
 
 npm install --save-dev mini-css-extract-plugin
 css파일을 분리 시켜줌
+
+--
+npm run dev:server -> backend
+npm run dev:assets -> js or css , webpack
+둘 다 실행 시켜줘야 함
