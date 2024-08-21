@@ -18,7 +18,9 @@ const fakeUser = {
 // 2. render한 것은 다시 render할 수 없음
 // - redirect(), sendStatus(), end() 등등 포함 (express에서 오류 발생)
 export const home = async (req, res) => {
-  const videos = await Video.find({}).sort({ createdAt: "desc" });
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner");
   if (videos) {
     return res.render("home", { pageTitle: "Home", fakeUser, videos });
   } else {
@@ -116,7 +118,7 @@ export const search = async (req, res) => {
         $regex: new RegExp(`${keyword}`, "i"), //^는 앞부분이 일치, "i"는 대소문자구분X
         //${keyword}$ 면 뒷부분이 일치, keyword만 적는다면 일부 일치
       },
-    });
+    }).populate("owner");
   }
   return res.render("search", { pageTitle: "Search✔", videos });
 };

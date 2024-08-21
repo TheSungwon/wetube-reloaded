@@ -1,18 +1,24 @@
 mixin vd(video)
-    div
-        h4
-            a(href=`/videos/${video.id}`)=video.title
-        
-        span Description : 
-        strong(style="color:red;") #{video.description}.
+    a(href=`/videos/${video.id}`).video-mixin
+        div.video-mixin__thumb
+        div.video-mixin__data
+            span.video-mixin__title=video.title
+            div.video-mixin__meta
+                span #{video.owner.name} &cent 
+                span #{video.meta.views}회
 
-        h4 No #{video.id}.
-        ul 
-            li #{video.meta.rating} / 5.
-            li #{video.comments} comments.
-            li Posted #{video.createAt}.
-            li #{video.meta.views} views.
-            p HashTags
-            each hashtag in video.hashtags
-                li=hashtag
-        hr
+        //- a(href=`/videos/${video.id}`)=video.title
+        
+        //- span Description : 
+        //- strong(style="color:red;") #{video.description}.
+
+        //- h4 No #{video.id}.
+        //- ul 
+        //-     li #{video.meta.rating} / 5.
+        //-     li #{video.comments} comments.
+        //-     li Posted #{video.createAt}.
+        //-     li #{video.meta.views} views.
+        //-     p HashTags
+        //-     each hashtag in video.hashtags
+        //-         li=hashtag
+        //- hr
