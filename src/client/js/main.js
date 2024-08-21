@@ -1,6 +1,8 @@
-const hello = async () => {
-  alert("hi");
-  const x = await fetch("");
-};
+// const hello = async () => {
+//   alert("hi");
+//   const x = await fetch("");
+// };
 
-hello();
+// hello();
+
+alert("hello");
