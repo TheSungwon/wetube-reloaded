@@ -5,4 +5,6 @@
 
 // hello();
 
-alert("hello");
+import "../scss/styles.scss";
+
+console.log(__dirname);

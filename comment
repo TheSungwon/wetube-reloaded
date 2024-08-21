@@ -214,3 +214,6 @@ src/client 폴더 생성 (or asset .. whatever)
 
 
 npm install -D babel-loader
+npm install sass-loader sass webpack --save-dev
+npm install --save-dev css-loader
+npm install --save-dev style-loader
