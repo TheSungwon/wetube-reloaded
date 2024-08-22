@@ -135,7 +135,6 @@ videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 
 //space bar, click and pause
-
 const videoPauseClick = () => {
   handlePlayClick();
 };
@@ -150,3 +149,13 @@ video.addEventListener("click", videoPauseClick);
 //or video.addEventListener("click", handlePlayClick);
 
 video.addEventListener("keyup", videoPauseKeyup);
+
+//call api
+const handleEnded = () => {
+  console.log("조회수 api");
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    method: "POST",
+  });
+};
+video.addEventListener("ended", handleEnded);

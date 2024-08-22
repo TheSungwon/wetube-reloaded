@@ -211,3 +211,19 @@ export const postUpload = async (req, res) => {
     });
   }
 };
+
+export const registerView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+
+  //status는 이후에 render() 등을 해야 response
+  //sendStatus를 사용
+  if (!video) {
+    return res.sendStatus(404);
+    return res.status(404);
+  }
+  video.meta.views = video.meta.views + 1;
+  await video.save();
+  return res.sendStatus(202);
+  return res.status(202);
+};
