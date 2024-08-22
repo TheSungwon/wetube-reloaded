@@ -48,14 +48,18 @@ const handleVolumeChange = (event) => {
 const handlePause = () => (playBtn.innerText = "Play");
 const handlePlay = () => (playBtn.innerText = "Pause");
 
+const formatTime = (seconds) =>
+  new Date(seconds * 1000).toISOString().substring(14, 19);
+
 const handleLoadedMetadata = () => {
   //event를 사용하지 않아도 addEventListener에서 loadedmetadata가 실행되면 video.duration을 알 수 있다
   //실행되기 전에는 알 수 없음.
-  totalTime.innerText = Math.floor(video.duration);
+
+  totalTime.innerText = formatTime(Math.floor(video.duration));
 };
 
 const handleTimeUpdate = () => {
-  currentTime.innerText = Math.floor(video.currentTime);
+  currentTime.innerText = formatTime(Math.floor(video.currentTime));
 };
 
 playBtn.addEventListener("click", handlePlayClick);
