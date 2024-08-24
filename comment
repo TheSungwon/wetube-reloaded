@@ -230,3 +230,9 @@ npm run dev:assets -> js or css , webpack
 https://cdnjs.com/libraries/font-awesome
 --
 https://meyerweb.com/eric/tools/css/reset/
+
+----
+front에서 async await사용을 위해
+npm i regenerator-runtime
+import regenerator from "regenerator-runtime/runtime.js";
+-------
