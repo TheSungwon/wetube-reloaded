@@ -167,7 +167,7 @@ export const postUpload = async (req, res) => {
     session: {
       user: { _id },
     },
-    file: { path: fileUrl },
+    files: { video, thumb },
     body: { title, description, hashtags },
   } = req;
   // const video = new Video({
@@ -186,7 +186,8 @@ export const postUpload = async (req, res) => {
       owner: _id,
       title,
       description,
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path.replace(/[\\]/g, "/"),
       // createdAt: Date.now(),
       hashtags: Video.formatHashtags(hashtags),
       // meta: {

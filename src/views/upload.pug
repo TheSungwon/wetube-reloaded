@@ -1,16 +1,18 @@
 extends base.pug
 
 block content 
-    div
-        button#startBtn Start Recording
+    div.upload__container
         video#preview(controls)
+        button#actionBtn.social__btn Start Recording
     if errorMessage
         span=errorMessage
     form(method = "POST", enctype="multipart/form-data")
         label(for="video") Video File
-        input(type="file", accept="video/*", id="video", name="video", required)
+        input(type="file", accept="video/*", id="video", name="video")
+        label(for="thumb") Thumbnail File
+        input(type="file", accept="image/*", id="thumb", name="thumb")
         input(placeholder="TITLE", type="text", required, name="title", maxlength=80)
-        input(placeholder="DESCRIPTION", type="text", required, name="description", minlength=10)
+        input(placeholder="DESCRIPTION", type="text", required, name="description", minlength=3)
         input(placeholder="HASH TAGS, separated by comma", type="text", required, name="hashtags")
         
         input(type="submit", value="upload Video")

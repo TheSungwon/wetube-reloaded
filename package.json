@@ -20,6 +20,9 @@
   "주석": "scripts --> win --> console에 npm run win",
   "주석2": "dependencies만 있으면 node_modules나 package-lock.json 지워도 npm install으로 재생성",
   "dependencies": {
+    "@ffmpeg/core": "^0.10.0",
+    "@ffmpeg/ffmpeg": "^0.10.1",
+    "@ffmpeg/util": "^0.12.1",
     "bcrypt": "^5.1.1",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.5",

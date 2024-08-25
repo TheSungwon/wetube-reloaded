@@ -236,3 +236,46 @@ front에서 async await사용을 위해
 npm i regenerator-runtime
 import regenerator from "regenerator-runtime/runtime.js";
 -------
+FFmpeg
+오디오 및 비디오를 기록, 변환 및 스트리밍하는 완벽한 크로스 플랫폼 솔루션입니다. FFmpeg는 인간과 기계가 만든 거의 모든 것을 디코딩, 인코딩, 트랜스코딩, mux, demux, 스트리밍, 필터링 및 재생할 수 있는 최고의 멀티미디어 프레임워크입니다.
+https://www.ffmpeg.org/
+
+FFmpeg WebAssembly
+WebAssembly에서 제공하는 브라우저 및 노드용 FFmpeg
+ffmpeg.wasm은 FFmpeg의 순수한 Webassembly/Javascript 포트입니다. 그것은 비디오 및 오디오 녹음, 변환, 스트리밍 등을 브라우저 내부에서 할 수 있도록 합니다.
+FFmpeg WebAssembly를 사용하는 이유는 FFmpeg를 사용해서 브라우저로 하여금 비디오 파일을 변환하기 위함이다.
+npm install @ffmpeg/ffmpeg @ffmpeg/core
+https://github.com/ffmpegwasm/ffmpeg.wasm
+https://www.npmjs.com/package/@ffmpeg/ffmpeg
+
+WebAssembly
+WebAssembly(Wasm)는 스택 기반 가상 머신을 위한 이진 명령 형식입니다. Wasm은 프로그래밍 언어를 위한 이식 가능한 컴파일 대상으로 설계되어 클라이언트 및 서버 응용 프로그램을 위해 웹에 배포할 수 있습니다.
+
+웹 어셈블리는 자바스크립트의 무덤일까?
+https://www.youtube.com/watch?v=KjgDxBLv0bM
+
+맥에서 FFMpeg설치하기
+brew install ffmpeg
+//////////////////////////////////
+ffmpeg & WebAssembly install node.js
+https://github.com/ffmpegwasm/ffmpeg.wasm?tab=readme-ov-file
+
+
+import { createFFmpeg, fetchFile } from '@ffmpeg/ffmpeg/dist/ffmpeg.min.js';
+npm install @ffmpeg/ffmpeg@0.10.1 @ffmpeg/core@0.10.0
+const ffmpeg = createFFmpeg({ 
+    log: true, 
+    corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js'
+});
+
+sharedArrayBuffer 에러났을때 ✅
+app.use((req, res, next) => {
+res.header("Cross-Origin-Embedder-Policy", "require-corp");
+res.header("Cross-Origin-Opener-Policy", "same-origin");
+next();
+});
+
+And add crossorigin to the github avatar in header.pug
+img.header__avatar(src=loggedInUser.avatarUrl,crossorigin)
+
+---------
