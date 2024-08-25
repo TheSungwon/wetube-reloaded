@@ -60,6 +60,7 @@ export const getEdit = async (req, res) => {
     return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
   } else if (String(video.owner) !== String(_id)) {
     //!== 는 생김새 뿐만 아니라 타입도 확인
+    req.flash("error", "Not Authorized");
     return res.status(403).redirect("/"); //403 means forbidden
   } else {
     return res.render("edit", {
@@ -83,7 +84,7 @@ export const postEdit = async (req, res) => {
     user: { _id },
   } = req.session;
   if (String(video.owner) !== String(_id)) {
-    console.log("forbidden");
+    req.flash("error", "You are not the owner of the video");
     return res.status(403).redirect("/"); //403 means forbidden
   }
 

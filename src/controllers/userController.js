@@ -222,6 +222,7 @@ export const postEdit = async (req, res) => {
 export const remove = (req, res) => res.send("remove user");
 export const logout = (req, res) => {
   req.session.destroy();
+  req.flash("info", "bye bye");
   return res.redirect("/");
 };
 export const see = async (req, res) => {
@@ -251,6 +252,7 @@ export const see = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "can't change password.");
     //github 계정은 비밀번호가 없으므로 접근 X
     return res.redirect("/");
   }
@@ -284,6 +286,6 @@ export const postChangePassword = async (req, res) => {
   user.password = newPassword;
   await user.save();
   //  req.session.user.password = user.password;
-
+  req.flash("info", "Password Updated");
   return res.redirect("/users/logout");
 };

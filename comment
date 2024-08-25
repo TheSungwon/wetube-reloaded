@@ -279,3 +279,9 @@ And add crossorigin to the github avatar in header.pug
 img.header__avatar(src=loggedInUser.avatarUrl,crossorigin)
 
 ---------
+flash message
+npm i express-flash
+import flash from "express-flash";
+app.use(flash());
+req.flash("error", "Not Authorized");
+ -> local.messages.error

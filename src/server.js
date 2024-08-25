@@ -8,6 +8,7 @@ import session from "express-session";
 import { localsMiddlewares } from "./middlewares";
 import MongoStore from "connect-mongo";
 import apiRouter from "./routers/apiRouter";
+import flash from "express-flash";
 
 const app = express();
 const logger = morgan("dev");
@@ -56,6 +57,7 @@ app.use(
 //   next();
 // });
 
+app.use(flash());
 app.use(localsMiddlewares); // Add to response locals object middleware
 //순서가 중요함. session middleware 다음에 위치.
 
