@@ -243,3 +243,31 @@ export const createComment = async (req, res) => {
   return res.status(201).json({ newCommentId: comment._id });
   return res.sendStatus(201);
 };
+
+export const deleteComment = async (req, res) => {
+  const { id: videoId } = req.params;
+  const { id } = req.body;
+  const { user } = req.session;
+  console.log(id, videoId, user._id, "ddddddddddddddddddd");
+
+  const ok = await Comment.findOneAndDelete({
+    _id: id,
+    owner: user,
+    video: videoId,
+  });
+  if (ok === null) {
+    return res.sendStatus(404);
+  }
+  const videoOk = await Video.findByIdAndUpdate(
+    { _id: videoId },
+    {
+      $pull: { comments: id },
+    },
+    {
+      new: true,
+    }
+  );
+  console.log(ok);
+  console.log(videoOk);
+  return res.sendStatus(200);
+};
