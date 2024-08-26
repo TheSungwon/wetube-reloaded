@@ -222,7 +222,6 @@ export const postEdit = async (req, res) => {
 export const remove = (req, res) => res.send("remove user");
 export const logout = (req, res) => {
   req.session.destroy();
-  req.flash("info", "bye bye");
   return res.redirect("/");
 };
 export const see = async (req, res) => {

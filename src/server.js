@@ -16,6 +16,7 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(logger);
 app.use(express.urlencoded({ extended: true })); //form을 사용하기 위한 선언
+app.use(express.json());
 //express application이 form value를 js로 변환. req.body
 
 app.use(

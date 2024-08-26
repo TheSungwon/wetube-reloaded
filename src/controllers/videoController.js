@@ -1,11 +1,6 @@
 import User from "../models/User";
 import Video from "../models/Video";
-
-const fakeUser = {
-  username: "user5434",
-  loggedIn: true,
-};
-
+import Comment from "../models/Comment";
 //mongoose는 더 이상 callback함수를 지원하지 않음. promise로 불러와야함.
 //Video.find({}, (error, document) => {}); callback 사용불가
 
@@ -22,15 +17,15 @@ export const home = async (req, res) => {
     .sort({ createdAt: "desc" })
     .populate("owner");
   if (videos) {
-    return res.render("home", { pageTitle: "Home", fakeUser, videos });
+    return res.render("home", { pageTitle: "Home", videos });
   } else {
-    return res.render("404", { fakeUser, pageTitle: "not found" });
+    return res.render("404", { pageTitle: "not found" });
   }
 };
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner"); //schema의 ref
+  const video = await Video.findById(id).populate("owner").populate("comments"); //schema의 ref
   console.log(video);
   // const owner = await User.findById(video.owner); 이렇게도 사용가능 하지만 populate로 대신 사용
 
@@ -39,11 +34,10 @@ export const watch = async (req, res) => {
   if (video) {
     return res.render("watch", {
       pageTitle: video.title,
-      fakeUser,
       video,
     });
   } else {
-    return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
+    return res.status(404).render("404", { pageTitle: "not found" });
   }
 };
 
@@ -57,7 +51,7 @@ export const getEdit = async (req, res) => {
   console.log(typeof video.owner, typeof _id);
 
   if (!video) {
-    return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
+    return res.status(404).render("404", { pageTitle: "not found" });
   } else if (String(video.owner) !== String(_id)) {
     //!== 는 생김새 뿐만 아니라 타입도 확인
     req.flash("error", "Not Authorized");
@@ -65,7 +59,7 @@ export const getEdit = async (req, res) => {
   } else {
     return res.render("edit", {
       pageTitle: `EDIT /  ${video.title}`,
-      fakeUser,
+
       video,
     });
   }
@@ -89,7 +83,7 @@ export const postEdit = async (req, res) => {
   }
 
   if (!video) {
-    return res.status(404).render("404", { fakeUser, pageTitle: "not found" });
+    return res.status(404).render("404", { pageTitle: "not found" });
   } else {
     // video.title = title;
     // video.description = description;
@@ -136,9 +130,7 @@ export const deleteVideo = async (req, res) => {
   }
 
   if (!video) {
-    return res
-      .status(404)
-      .render("404", { fakeUser, pageTitle: "not found Id Delete" });
+    return res.status(404).render("404", { pageTitle: "not found Id Delete" });
   } else {
     await Video.findByIdAndDelete(id); //findByIdAndRemove는 특별한 이유가 없는한 사용하지 말 것, 이유는 mongoDB는 rollback이 안 되기 떄문.
 
@@ -157,7 +149,7 @@ export const deleteVideo = async (req, res) => {
 };
 
 export const getUpload = (req, res) =>
-  res.render("upload", { fakeUser, pageTitle: "upload Video" });
+  res.render("upload", { pageTitle: "upload Video" });
 
 export const postUpload = async (req, res) => {
   // const {user} = req.session;
@@ -207,7 +199,6 @@ export const postUpload = async (req, res) => {
     console.log(`errorrrrrrrrrrrrr, ${error}`);
 
     return res.status(400).render("upload", {
-      fakeUser,
       pageTitle: "upload Video",
       errorMessage: error._message,
     });
@@ -228,4 +219,27 @@ export const registerView = async (req, res) => {
   await video.save();
   return res.sendStatus(202);
   return res.status(202);
+};
+
+export const createComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { text },
+    session: { user },
+  } = req;
+
+  const video = await Video.findById(id);
+
+  if (!video) {
+    return res.sendStatus(404); //sendStatus는 응답을 끝냄, status로 사용하지않도록 주의
+  }
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+  });
+  video.comments.push(comment._id);
+  video.save();
+  return res.status(201).json({ newCommentId: comment._id });
+  return res.sendStatus(201);
 };
